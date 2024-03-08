@@ -1,0 +1,59 @@
+version: '3.9'
+services:
+  frontend:
+    container_name: frontend_container
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+      - node_modules_frontend:/app/node_modules
+      - build_frontend:/app/build
+    environment:
+      - API_URL=http://api:8000
+      - NAME=Estetixs
+      - VERCEL_FORCE_NO_BUILD_CACHE=1
+    depends_on:
+      - api
+  # API services
+  api:
+    container_name: api_container
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app
+    environment:
+      - DB_NAME=api_db
+      - DB_USER=estetixs_db_admin
+      - DB_PASSWORD=estetixs_db_admin
+      - DB_HOST=postgres_db
+      - DB_PORT=5432      
+      - PORT=8000
+      - URL=http://localhost:4000
+    depends_on:
+      - postgres_db
+  # PostgreSQL DB services
+  postgres_db:
+    container_name: db_container
+    image: postgres:latest
+    ports:
+      - "5432:5432" # Default port for PostgreSQL
+    environment:
+      - POSTGRES_USER=estetixs_db_admin # Replace with your desired username
+      - POSTGRES_PASSWORD=estetixs_db_admin # Replace with your desired password
+      - POSTGRES_DB=api_db # Default database that will be created upon PostgreSQL container startup
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+
+volumes:
+  postgres_db:
+  node_modules_frontend:
+  build_frontend:
+

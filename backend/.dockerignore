@@ -1,0 +1,9 @@
+./.venv/
+./vscode
+./.git/
+
+Dockerfile
+README.md
+.gitignore
+.dockerignore
+docker-compose.yml
