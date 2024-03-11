@@ -6,11 +6,10 @@ const DashboardLayout = ({ children }) => {
     const role = headersList.get('x-user-role');
         return (
             <main className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-                <div className="w-full flex-none md:w-64">
-                    
-                    {role === 'Admin' && 'Admin Dashboard SideBar'}
-                    {role === 'Doctor' && <DoctorDashboardSideNav />}
-                    {role === 'Patient' && <PatientDashboardSideNav />}
+                <div className="w-full flex-none md:w-64">                    
+                    {role === 'ADMIN' && 'Admin Dashboard SideBar'}
+                    {role === 'DOCTOR' && <DoctorDashboardSideNav />}
+                    {role === 'PATIENT' && <PatientDashboardSideNav />}
                 </div>
                 <div className="flex-grow md:overflow-y-auto md:p-12">
                 {children}

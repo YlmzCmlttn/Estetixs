@@ -17,7 +17,6 @@ async function loginAction(prevState: any, formData: FormData) {
         });
         const data = await response.json();
         if(data.token){    
-            console.log('token', data.token);
             cookies().set({
                 name: 'token',
                 value: data.token,
@@ -25,7 +24,6 @@ async function loginAction(prevState: any, formData: FormData) {
                 path: '/',
             });
         }else{
-            console.log('no token');
             return { message: 'Unauthorized' };
         }
         if(response.ok){

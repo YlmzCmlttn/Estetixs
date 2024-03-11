@@ -10,7 +10,6 @@ function LoginForm() {
         const response = await loginAction(prevState, formData);
         if (response.message === 'Authorized') {
             const nextUrl = searchParams.get('next');
-            console.log('nextUrl', nextUrl);
             router.push(nextUrl ? nextUrl : '/dashboard');
         }
     }, initialState);

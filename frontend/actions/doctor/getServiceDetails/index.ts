@@ -3,11 +3,11 @@
 import { cookies } from 'next/headers'
 import { redirect } from "next/dist/server/api-utils";
 
-async function getServiceDetailsAction() {
+async function getServiceDetailsAction(service_id : string) {
     if (cookies().has('token')) {
         const token = cookies().get('token')?.value;
         try {
-            const response = await fetch('http://api:8000/api/v1/service/', {
+            const response = await fetch(`http://api:8000/api/v1/service/${service_id}`, {
                 cache: 'no-cache',
                 method: 'GET',
                 headers: {
@@ -20,12 +20,11 @@ async function getServiceDetailsAction() {
             }
             return null;
         } catch (error) {
-            console.log('error', error);
             cookies().set('token', '');
             cookies().delete('token');
             redirect('/login');
         }
-    }
+    }    
 }   
 
 export default getServiceDetailsAction;

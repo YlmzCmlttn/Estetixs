@@ -6,8 +6,8 @@ function ServicesPage() {
     const role = headersList.get('x-user-role');
     return (
         <>
-        {role === 'Doctor' && <DoctorServicesContainer/> }
-        {role === 'Patient' && <PatientServicesContainer/> }
+        {role === 'DOCTOR' && <DoctorServicesContainer/> }
+        {role === 'PATIENT' && <PatientServicesContainer/> }
         </>
      );
 }

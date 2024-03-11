@@ -6,9 +6,11 @@ const DoctorMyPatientsContainer = async () => {
         <div>
             {myPatients.map((patient) => {
                 return (
+                    <Link href={`/dashboard/patients/${patient.id}`} key={patient.id}>
                     <div key={patient.id}>
-                        <h1>{patient.fullname}</h1>
+                        <h1>{patient.username}</h1>
                     </div>
+                    </Link>
                 )
             })}
         </div>

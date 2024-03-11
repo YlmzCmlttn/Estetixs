@@ -1,7 +1,6 @@
 import createConnectionAction from "@/actions/connection/createConnection";
 import { redirect } from 'next/navigation'
 const PatientDashboardContainer = async ({doctor_id}) => {
-    console.log("Doctor Id:", doctor_id);
     if(doctor_id){
         await createConnectionAction(doctor_id);
         redirect('/dashboard/my-doctors');

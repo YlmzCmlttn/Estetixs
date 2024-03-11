@@ -17,7 +17,6 @@ async function registerAction(prevState: any, formData: FormData) {
             body: JSON.stringify({ email, password }),
         });
         const data = await response.json();
-        console.log('data', data);
         if(data.email){
             return { message: 'Email: ' + data.email };
         }
@@ -25,7 +24,6 @@ async function registerAction(prevState: any, formData: FormData) {
             return { message: 'Password: ' + data.password };
         }
         if(data.token){    
-            console.log('token', data.token);
             cookies().set({
                 name: 'token',
                 value: data.token,

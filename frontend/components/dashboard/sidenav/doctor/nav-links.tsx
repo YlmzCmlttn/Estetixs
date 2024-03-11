@@ -11,7 +11,7 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  { name: 'Patients', href: '/dashboard/patient-list', icon: UserGroupIcon },
+  { name: 'Patients', href: '/dashboard/patients', icon: UserGroupIcon },
   {
     name: 'Services',
     href: '/dashboard/services',
