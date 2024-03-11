@@ -14,6 +14,10 @@ class IsDoctorOrReadOnly(BasePermission):
             return True
         return request.user.is_doctor
     
+class IsDoctor(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_doctor
+    
 class IsServiceTypeOwnerOrReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:

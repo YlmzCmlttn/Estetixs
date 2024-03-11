@@ -36,6 +36,17 @@ class LoginObtainAuthToken(ObtainAuthToken):
             'role': user.role,
         })    
 
+class MeView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def get(self, request):
+        user = request.user
+        return Response({
+            'id': user.id,
+            'user': user.username,
+            'role': user.role
+        })
+
 class SignupView(SignUpObtainAuthToken):
     serializer_class = SignUpSerializer
 
@@ -48,3 +59,4 @@ class LogoutView(APIView):
     def post(self, request):
         request.auth.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+

@@ -29,10 +29,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
     
 class DoctorProfileSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source='user.first_name', read_only=True)
+    last_name = serializers.CharField(source='user.last_name', read_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model = DoctorProfile
-        fields = '__all__'
-        extra_kwargs = {'user': {'read_only': True}, 'doctor_id': {'read_only': True}}
+        fields = ('user', 'username', 'first_name', 'last_name')
+        read_only_fields = ('user', 'doctor_id')
 
 class PatientProfileSerializer(serializers.ModelSerializer):
     class Meta:

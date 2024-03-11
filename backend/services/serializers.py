@@ -42,6 +42,7 @@ class Doctor_Service_TypeSerializer(CustomModelSerializer):
     
 class Doctor_Operation_TypeSerializer(CustomModelSerializer):
     operation_type_name = serializers.CharField(source='operation_type.name', read_only=True)
+    operation_type_service_type = serializers.CharField(source='operation_type.service_type.name', read_only=True)
     class Meta:
         model = Doctor_Operation_Type
         fields = '__all__'
