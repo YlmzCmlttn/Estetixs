@@ -4,7 +4,7 @@ const PatientMyDoctorsContainer = async () => {
     const myDoctors = await getMyDoctorsAction();
     return ( 
         <div>
-            {myDoctors.map((doctor) => {
+            {myDoctors && myDoctors.map((doctor) => {
                 return (
                     <div key={doctor.doctor_url}>
                         <h1>{doctor.fullname}</h1>

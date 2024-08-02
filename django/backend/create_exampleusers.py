@@ -9,7 +9,7 @@ from users.models import Doctor, Patient
 User = get_user_model()
 # Create Doctor Superuser
 if not User.objects.filter(email='doctor@example.com').exists():
-    doctor = Doctor.objects.create(
+    doctor = Doctor.objects.create_user(
         email='doctor@example.com',
         password='sananesanane',
         is_staff=False,
@@ -22,7 +22,7 @@ else:
 
 # Create Patient Superuser
 if not User.objects.filter(email='patient@example.com').exists():
-    patient = Patient.objects.create(
+    patient = Patient.objects.create_user(
         email='patient@example.com',
         password='sananesanane',
         is_staff=False,

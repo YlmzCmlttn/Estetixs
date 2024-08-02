@@ -3,7 +3,7 @@ const PatientServicesContainer = async () => {
     const myServices = await getMyServicesAction();
     return ( 
         <div>
-            {myServices.map((service) => {
+            {myServices && myServices.map((service) => {
                 return (
                     <div key={service.id}>
                         <p>{service.fullname}</p>
