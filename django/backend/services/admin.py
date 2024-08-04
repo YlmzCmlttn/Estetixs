@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django import forms
 
-from .models import Service, Service_Type, Operation_Type, Service_Operation, Appointment, Doctor_Service_Type, Doctor_Operation_Type
+from .models import Service, Service_Type, Operation_Type, Service_Operation, Appointment, Doctor_Service_Type, Doctor_Operation_Type,AppointmentHistory
 from .inlines import OperationInline
+from .forms import AppointmentHistoryForm
 
 @admin.register(Service_Type)
 class Service_TypeAdmin(admin.ModelAdmin):
@@ -34,13 +35,6 @@ class Service_OperationAdmin(admin.ModelAdmin):
     list_display = ['service', 'operation']
     search_fields = ['service', 'operation']
 
-@admin.register(Appointment)
-class AppointmentAdmin(admin.ModelAdmin):
-    model = Appointment
-    list_display = ['service', 'status', 'date_and_time', 'created_at', 'updated_at']
-    search_fields = ['service', 'status']
-    list_filter = ['status']    
-
 @admin.register(Doctor_Service_Type)
 class Doctor_Service_TypeAdmin(admin.ModelAdmin):
     model = Doctor_Service_Type
@@ -62,3 +56,20 @@ class Doctor_Operation_TypeAdmin(admin.ModelAdmin):
     list_display = ['doctor', 'operation_type']
     search_fields = ['doctor', 'operation_type']
     list_filter = ['doctor', 'operation_type']
+
+
+
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+    model = Appointment
+    list_display = ['service', 'status', 'date_and_time', 'created_at', 'updated_at']
+    search_fields = ['service', 'status']
+    list_filter = ['status']    
+
+@admin.register(AppointmentHistory)
+class AppointmentHistoryAdmin(admin.ModelAdmin):
+    form = AppointmentHistoryForm    
+    model = AppointmentHistory
+    list_display = ['appointment', 'changed_by','new_date','previous_date']
+    search_fields = ['appointment', 'changed_by']
+    list_filter = ['appointment']

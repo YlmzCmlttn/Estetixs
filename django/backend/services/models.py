@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Doctor, Patient
+from users.models import User,Doctor, Patient
 from django.core.exceptions import ValidationError
 
 class Service_Type(models.Model):
@@ -50,18 +50,6 @@ class Service_Operation(models.Model):
             raise ValidationError({'operation': f'The operation type {self.operation.name} does not match the service type {self.service.type.name}.'})        
 
 
-class Appointment(models.Model):
-    class Status(models.TextChoices):
-        PENDING = "PENDING", "Pending"
-        CONFIRMED = "CONFIRMED", "Confirmed"
-        CANCELLED = "CANCELLED", "Cancelled"
-    
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
-    date_and_time = models.DateTimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)    
-
 class Doctor_Service_Type(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     service_type = models.ForeignKey(Service_Type, on_delete=models.CASCADE)
@@ -80,3 +68,38 @@ class Doctor_Operation_Type(models.Model):
         doctor_service_types = Doctor_Service_Type.objects.filter(doctor=self.doctor, service_type=operation_service_type)
         if not doctor_service_types.exists():
             raise ValidationError({'operation_type': f'The doctor does not have the service type {operation_service_type.name} required for this operation type.'})
+
+
+
+class Appointment(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('offered', 'Offered'),
+        ('rescheduled', 'Rescheduled'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    )
+    APPOINTMENT_TYPE = (
+        ('on-site', 'On-Site'),
+        ('online', 'Online')
+    )
+    
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    status = models.CharField(max_length=11, choices=STATUS_CHOICES, default='pending')
+    type = models.CharField(max_length=10, choices=APPOINTMENT_TYPE, default='on-site')
+    date_and_time = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return f'Appointment{self.id} - Service {self.service.id}'
+
+class AppointmentHistory(models.Model):
+    appointment = models.ForeignKey(Appointment, related_name='history', on_delete=models.CASCADE)
+    new_date = models.DateTimeField()
+    previous_date = models.DateTimeField()
+    changed_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    changed_at = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return f'Appointment {self.appointment.id}'
