@@ -5,7 +5,7 @@ echo "Collect static files"
 #python manage.py collectstatic --noinput
 
 echo "Apply database make migrations"
-python manage.py makemigrations users profiles services posts
+python manage.py makemigrations users profiles services
 
 # Apply database migrations
 echo "Apply database migrations"
